@@ -1,0 +1,163 @@
+@forward 'globals';
+@use './globals/variables';
+@use './globals/function' as f;
+
+/* ===========
+  Typography
+============== */
+
+
+// MAIN CARD
+
+#main-card__content-top-text :first-child {
+  font-size: f.convertToRem(12);
+  color: var(--reportFontColor);
+}
+
+#main-card__content-top-text:not(:first-child) {
+  font-size: f.convertToRem(24);
+  font-weight: 300;
+}
+
+#main-card__content-bottom ul > li {
+  color: var(--menuFontColor);
+  &:hover {
+    color: #FFF;
+  }
+}
+
+// SECONDARY CARD
+
+.secondary-card {
+
+  .content__top > h2 {
+    font-size: f.convertToRem(16);
+    font-weight: 400;
+  }
+
+  .content__bottom :first-child {
+    font-size: f.convertToRem(24);
+    font-weight: 300;
+    color: var(--hoursFontColor);
+  }
+
+  .content__bottom:not(:first-child) {
+    font-size: f.convertToRem(14);
+    color: var(--lastWeekFontColor);
+  }
+}
+
+
+.attribution {
+  font-size: f.convertToRem(11);
+  text-align: center;
+}
+
+.attribution a {
+  color: var(--attributionLink);
+}
+
+
+/* ===========
+  Layouts
+============== */
+
+
+// PENSER A CREER UNE FONCTION QUI CONVERTI EN EM LES PIXELS POUR LES PADDING LES MARGINS
+
+
+body {
+  min-height: 100vh;
+  background-color: var(--backgroundColor-body);
+}
+
+.container {
+  padding: 24px 24px;
+}
+
+.card {
+  width: min(90%, 320px);
+  margin: 0 auto;
+  position: relative;
+  margin-bottom: 54px;
+}
+
+.secondary-card {
+  @extend .card;
+  border-radius: 12px;  
+  background-color: var(--backgroundColor-card);
+}
+
+.illustration__card {
+  position: absolute;
+  inset: -34px 0 5px 0;
+  border-radius: inherit;
+  z-index: -1;
+  background-size: 66px;
+  background-position: top -8px right 14px;
+  background-repeat: no-repeat;
+}
+
+#work {
+  background-image: url(../images/icon-work.svg);
+  background-color: var(--backgroundColor-work);
+}
+
+#main-card__content-top {
+  position: relative;
+  transform: translateY(50px);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  background-color: var(--backgroundColor-mainCard-top);
+}
+
+#main-card__content-top,
+#main-card__content-bottom {
+  border-radius: 12px;
+}
+
+#portrait {
+  width: 64px;
+  height: 64px;
+  border-radius: 55px;
+  border: solid 2px #FFF;
+  margin-right: 14px;
+}
+
+#main-card__content-bottom {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  background-color: var(--backgroundColor-card);
+  padding: 16px 22px;
+  height: 100px;
+
+  & > ul {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  & > ul li {
+    cursor: pointer;
+  }
+}
+
+.content__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content__top > img {
+  width: 21px;
+  height: 5px;
+  cursor: pointer;
+}
+
+.content__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
