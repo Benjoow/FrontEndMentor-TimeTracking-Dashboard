@@ -3,3 +3,7 @@
 @function convertToRem ($pixel, $base : 16) {
   @return math.div($pixel, $base) + rem;
 }
+
+@function convertToEm ($pixel, $font-size) {
+  @return math.div($pixel, $font-size) + em;
+}

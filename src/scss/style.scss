@@ -33,6 +33,7 @@
   .content__top > h2 {
     font-size: f.convertToRem(16);
     font-weight: 400;
+    color: #FFF;
   }
 
   .content__bottom :first-child {
@@ -42,7 +43,7 @@
   }
 
   .content__bottom:not(:first-child) {
-    font-size: f.convertToRem(14);
+    font-size: f.convertToRem(12);
     color: var(--lastWeekFontColor);
   }
 }
@@ -65,42 +66,27 @@
 
 // PENSER A CREER UNE FONCTION QUI CONVERTI EN EM LES PIXELS POUR LES PADDING LES MARGINS
 
-
 body {
   min-height: 100vh;
   background-color: var(--backgroundColor-body);
 }
 
 .container {
-  padding: 24px 24px;
+  padding: f.convertToRem(24) f.convertToRem(24);
 }
 
 .card {
-  width: min(90%, 320px);
+  width: min(90%, f.convertToRem(320));
   margin: 0 auto;
   position: relative;
   margin-bottom: 54px;
 }
 
-.secondary-card {
-  @extend .card;
-  border-radius: 12px;  
-  background-color: var(--backgroundColor-card);
-}
+// MAIN CARD
 
-.illustration__card {
-  position: absolute;
-  inset: -34px 0 5px 0;
-  border-radius: inherit;
-  z-index: -1;
-  background-size: 66px;
-  background-position: top -8px right 14px;
-  background-repeat: no-repeat;
-}
-
-#work {
-  background-image: url(../images/icon-work.svg);
-  background-color: var(--backgroundColor-work);
+#main-card__content-top,
+#main-card__content-bottom {
+  border-radius: 12px;
 }
 
 #main-card__content-top {
@@ -110,11 +96,6 @@ body {
   display: flex;
   align-items: center;
   background-color: var(--backgroundColor-mainCard-top);
-}
-
-#main-card__content-top,
-#main-card__content-bottom {
-  border-radius: 12px;
 }
 
 #portrait {
@@ -144,11 +125,62 @@ body {
   }
 }
 
+// SECONDARY CARDS
+
+.secondary-card {
+  @extend .card;
+  border-radius: 12px;
+  background-color: var(--backgroundColor-card);
+}
+
+.illustration__card {
+  position: absolute;
+  inset: -34px 0 5px 0;
+  border-radius: inherit;
+  z-index: -1;
+  background-size: 66px;
+  background-position: top -8px right 14px;
+  background-repeat: no-repeat;
+}
+
+#work {
+  background-image: url(../images/icon-work.svg);
+  background-color: var(--backgroundColor-work);
+}
+
+#play {
+  background-image: url(../images/icon-play.svg);
+  background-color: var(--backgroundColor-play);  
+}
+
+#study {
+  background-image: url(../images/icon-study.svg);
+  background-color: var(--backgroundColor-study);
+}
+
+#exercise {
+  background-image: url(../images/icon-exercise.svg);
+  background-color: var(--backgroundColor-exercise);
+  background-position: top -1px right 14px;
+}
+
+#social {
+  background-image: url(../images/icon-social.svg);
+  background-color: var(--backgroundColor-social); 
+}
+
+#selfCare {
+  background-image: url(../images/icon-self-care.svg);
+  background-color: var(--backgroundColor-selfCare);
+}
+
 .content__top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: f.convertToEm(8px, 16px);
 }
+
 
 .content__top > img {
   width: 21px;
