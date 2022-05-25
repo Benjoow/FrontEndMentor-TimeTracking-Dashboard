@@ -1,7 +1,7 @@
 const cardsData = async ():Promise<Array<Object>> => {
-  const url = './src/data.json';
+  const url = './src/public/data.json';
   const response = await fetch(url, {
-    method: 'GET',
+    "method": 'GET',
   })
   return response.json();
 }
@@ -80,7 +80,7 @@ const activeMenu = (event: Event) => {
 
 const sortByTimePeriod = async (period: string): Promise<Array<Object>> => {
   const data: Array<any> = await cardsData();
-  const dataSort: { title: string; current: number; previous: number} [] = [];
+  const dataSort: { title: string; current: number; previous: number } [] = [];
   data.forEach(item => {
     dataSort.push({ title:    item.title,
                     current:  item.timeframes[period].current,
