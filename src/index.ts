@@ -39,7 +39,8 @@ const createCards = async (cardsInfo: Array<any>):Promise<void> => {
     contentTop.classList.add("content__top");
     contentTop.appendChild(document.createElement("h2")).textContent = item.title;
     const buttonOption = document.createElement("img");
-    buttonOption.src = "./src/images/icon-ellipsis.svg";
+    const imgURL = new URL('./src/images/icon-ellipsis.svg', import.meta.url).href;
+    buttonOption.src = imgURL;
     buttonOption.setAttribute('alt', 'options button');
     buttonOption.classList.add("svgColor");
     contentTop.appendChild(buttonOption);
