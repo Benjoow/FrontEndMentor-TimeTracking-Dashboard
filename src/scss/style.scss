@@ -95,13 +95,13 @@ body {
   background-color: var(--backgroundColor-body);
   display: grid;
   place-items: center;
-  margin: 20px 0;
+  margin: f.convertToRem(20) 0;
 }
 
 main {
   display: grid;
   width: min(90%, f.convertToRem(320));
-  gap: 30px 30px;
+  gap: f.convertToRem(30) f.convertToRem(30);
   grid-template-areas:
   "mainCard"
   "work" 
@@ -139,7 +139,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-bottom: 14px;
+    padding-bottom: f.convertToRem(14);
   }
 }
 
@@ -159,25 +159,25 @@ main {
 }
 
 #portrait {
-  width: 64px;
-  height: 64px;
+  width: f.convertToRem(64);
+  height: f.convertToRem(64);
   border-radius: 55px;
   border: solid 3px #FFF;
-  margin-right: 14px;
+  margin-right: f.convertToRem(14);
 
   @include m.breakPointL {
-    width: 80px;
-    height: 80px;
+    width: f.convertToRem(80);
+    height: f.convertToRem(80);
     margin-right: 0;
-    margin-bottom: 36px;
+    margin-bottom: f.convertToRem(36);
   }
 }
 
 #main-card__content-bottom {
-  padding: 16px 22px;
+  padding: f.convertToRem(16) f.convertToRem(22);
   
   @include m.breakPointL {
-    padding: 14px 22px;
+    padding: f.convertToRem(14) f.convertToRem(22);
   }
   
 
@@ -289,8 +289,8 @@ main {
 }
 
 .content__top > img {
-  width: 21px;
-  height: 5px;
+  width: f.convertToRem(21);
+  height: f.convertToRem(5);
   cursor: pointer;
 }
 
@@ -306,5 +306,5 @@ main {
 }
 
 .attribution {
-  margin-top: 14px;
+  margin-top: f.convertToRem(14);
 }
