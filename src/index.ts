@@ -6,13 +6,11 @@ const cardsData = async ():Promise<Object> => {
   return response.json();
 }
 
-const createCards = async (cardsInfo: Array<Object>):Promise<void> => {
+const createCards = async (cardsInfo: Array<any>):Promise<void> => {
   const main: HTMLElement = document.querySelector("main")!;
   cardsInfo.forEach(item => {
     const card: HTMLDivElement = document.createElement("div");
     card.classList.add("secondary-container", "secondary-card");
-    // const secondaryBottom: HTMLDivElement = document.createElement("div");
-    // secondaryBottom.classList.add("illustration__card");
     switch (item.title) {
       case 'Work' :
         card.setAttribute("id", "work");
@@ -81,11 +79,11 @@ const activeMenu = (event: Event) => {
 }
 
 const sortByTimePeriod = async (period: string): Promise<Array<Object>> => {
-  const data: Array<Object> = await cardsData();  
+  const data: Array<any> = await cardsData();  
   const dataSort: { title: string; current: number; previous: number} [] = [];
   data.forEach(item => {
-    dataSort.push({ title: item.title,
-                    current: item.timeframes[period].current,
+    dataSort.push({ title:    item.title,
+                    current:  item.timeframes[period].current,
                     previous: item.timeframes[period].previous
                  })  
   })

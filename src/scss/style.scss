@@ -91,10 +91,12 @@
 ============== */
 
 body {
+  display: flex;
   min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: var(--backgroundColor-body);
-  display: grid;
-  place-items: center;
   margin: f.convertToRem(20) 0;
 }
 
