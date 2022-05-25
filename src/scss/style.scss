@@ -1,5 +1,5 @@
 @forward 'globals';
-@use './globals/variables';
+@use './globals/variables' as m; // for mixin
 @use './globals/function' as f;
 
 /* ===========
@@ -12,18 +12,32 @@
 #main-card__content-top-text :first-child {
   font-size: f.convertToRem(12);
   color: var(--reportFontColor);
+
+  @include m.breakPointL {
+    font-size: f.convertToRem(14);
+  }
 }
 
 #main-card__content-top-text:not(:first-child) {
   font-size: f.convertToRem(24);
   font-weight: 300;
+
+  @include m.breakPointL {
+    font-size: f.convertToRem(34);
+  }
 }
 
 #main-card__content-bottom ul > li {
   color: var(--menuFontColor);
+  transition: color 0.3s linear;
+  
   &:hover {
     color: #FFF;
   }
+}
+
+#main-card__content-bottom .active {
+  color: #FFF;
 }
 
 // SECONDARY CARD
@@ -34,17 +48,30 @@
     font-size: f.convertToRem(16);
     font-weight: 400;
     color: #FFF;
+
+    @include m.breakPointL {
+      font-size: f.convertToRem(18);
+    }
   }
 
   .content__bottom :first-child {
     font-size: f.convertToRem(24);
     font-weight: 300;
     color: var(--hoursFontColor);
+
+    @include m.breakPointL {
+      font-size: f.convertToRem(48);
+      margin-bottom: f.convertToRem(10);
+    }
   }
 
   .content__bottom:not(:first-child) {
     font-size: f.convertToRem(12);
     color: var(--lastWeekFontColor);
+    
+    @include m.breakPointL {
+      font-size: f.convertToRem(14);
+    }
   }
 }
 
@@ -63,115 +90,191 @@
   Layouts
 ============== */
 
-
-// PENSER A CREER UNE FONCTION QUI CONVERTI EN EM LES PIXELS POUR LES PADDING LES MARGINS
-
 body {
   min-height: 100vh;
   background-color: var(--backgroundColor-body);
+  display: grid;
+  place-items: center;
+  margin: 20px 0;
 }
+
+main {
+  display: grid;
+  width: min(90%, f.convertToRem(320));
+  gap: 30px 30px;
+  grid-template-areas:
+  "mainCard"
+  "work" 
+  "play" 
+  "study"
+  "exercise"
+  "social"
+  "selfCare"; 
+  @include m.breakPointL {
+    width: min(90%, f.convertToRem(1100));
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+    "mainCard work play study"
+    "mainCard exercise social selfCare"
+  }
+  
+}  
 
 .container {
   padding: f.convertToRem(24) f.convertToRem(24);
 }
 
 .card {
-  width: min(90%, f.convertToRem(320));
-  margin: 0 auto;
   position: relative;
-  margin-bottom: 54px;
 }
 
 // MAIN CARD
 
-#main-card__content-top,
-#main-card__content-bottom {
+.main__card {
+  grid-area: mainCard;
+  background-color: var(--backgroundColor-card);
   border-radius: 12px;
+
+  @include m.breakPointL {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 14px;
+  }
 }
 
 #main-card__content-top {
   position: relative;
-  transform: translateY(50px);
   z-index: 3;
   display: flex;
   align-items: center;
   background-color: var(--backgroundColor-mainCard-top);
+  border-radius: 12px;
+  
+  @include m.breakPointL {
+    flex-direction: column;
+    align-items: flex-start;
+    height: 70%;
+  }
 }
 
 #portrait {
   width: 64px;
   height: 64px;
   border-radius: 55px;
-  border: solid 2px #FFF;
+  border: solid 3px #FFF;
   margin-right: 14px;
+
+  @include m.breakPointL {
+    width: 80px;
+    height: 80px;
+    margin-right: 0;
+    margin-bottom: 36px;
+  }
 }
 
 #main-card__content-bottom {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  background-color: var(--backgroundColor-card);
   padding: 16px 22px;
-  height: 100px;
+  
+  @include m.breakPointL {
+    padding: 14px 22px;
+  }
+  
 
   & > ul {
     display: flex;
     width: 100%;
     justify-content: space-between;
+
+    @include m.breakPointL {
+      flex-direction: column;
+    }
   }
 
   & > ul li {
     cursor: pointer;
   }
+
+  @include m.breakPointL {
+    ul li:not(:last-child) {
+      margin-bottom: 22px;
+    }
+  }
 }
 
 // SECONDARY CARDS
 
+.secondary-container {
+  padding: f.convertToRem(34) 0 0 0;
+  
+  @include m.breakPointL {
+    padding: f.convertToRem(42) 0 0 0;
+  }
+}
+
 .secondary-card {
   @extend .card;
   border-radius: 12px;
-  background-color: var(--backgroundColor-card);
-}
-
-.illustration__card {
-  position: absolute;
-  inset: -34px 0 5px 0;
-  border-radius: inherit;
-  z-index: -1;
   background-size: 66px;
   background-position: top -8px right 14px;
   background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+
+  &:hover > .secondary-card__bottom {
+    background-color: var(--backgroundColor-card-hover);
+  }       
 }
 
 #work {
+  grid-area: work;
   background-image: url(../images/icon-work.svg);
   background-color: var(--backgroundColor-work);
 }
 
 #play {
+  grid-area: play;
   background-image: url(../images/icon-play.svg);
   background-color: var(--backgroundColor-play);  
 }
 
 #study {
+  grid-area: study;
   background-image: url(../images/icon-study.svg);
   background-color: var(--backgroundColor-study);
 }
 
 #exercise {
+  grid-area: exercise;
   background-image: url(../images/icon-exercise.svg);
   background-color: var(--backgroundColor-exercise);
   background-position: top -1px right 14px;
 }
 
 #social {
+  grid-area: social;
   background-image: url(../images/icon-social.svg);
   background-color: var(--backgroundColor-social); 
 }
 
 #selfCare {
+  grid-area: selfCare;
   background-image: url(../images/icon-self-care.svg);
   background-color: var(--backgroundColor-selfCare);
+}
+
+.secondary-card__bottom {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--backgroundColor-card);
+  border-radius: 10px;
+  padding: f.convertToRem(22);
+  
+  @include m.breakPointL {
+    padding: f.convertToRem(28);
+  }
 }
 
 .content__top {
@@ -181,6 +284,9 @@ body {
   margin-bottom: f.convertToEm(8px, 16px);
 }
 
+.svgColor:hover {
+  filter: contrast(300%);
+}
 
 .content__top > img {
   width: 21px;
@@ -192,4 +298,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
+  @include m.breakPointL {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.attribution {
+  margin-top: 14px;
 }
