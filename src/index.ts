@@ -1,5 +1,5 @@
 const cardsData = async ():Promise<Array<Object>> => {
-  const url = './src/public/data.json';
+  const url = '/data.json';
   const response = await fetch(url, {
     "method": 'GET',
   })
