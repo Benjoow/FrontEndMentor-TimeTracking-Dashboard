@@ -6,6 +6,8 @@ const cardsData = async ():Promise<Array<Object>> => {
   return response.json();
 }
 
+// Supprimer les Array Any au profit d'une interface ou un type pour l'objet.
+
 const createCards = async (cardsInfo: Array<any>):Promise<void> => {
   const main: HTMLElement = document.querySelector("main")!;
   cardsInfo.forEach(item => {
@@ -37,7 +39,7 @@ const createCards = async (cardsInfo: Array<any>):Promise<void> => {
     secondaryBottom.classList.add("secondary-card__bottom");
     const contentTop = document.createElement("div");
     contentTop.classList.add("content__top");
-    contentTop.appendChild(document.createElement("h2")).textContent = item.title;
+    contentTop.appendChild(document.createElement("h1")).textContent = item.title;
     const buttonOption = document.createElement("img");
     const imgURL = new URL('/icon-ellipsis.svg', import.meta.url).href;
     buttonOption.src = imgURL;
@@ -60,11 +62,30 @@ const createCards = async (cardsInfo: Array<any>):Promise<void> => {
   })
 }
 
-const deleteCards = () => {
-  const secondaryCards = document.querySelectorAll(".secondary-card");
-  secondaryCards.forEach(item => {
-    item.remove();
-  })
+const updateCards = (period: string ,data: Array<any>) => {
+  const current = document.querySelectorAll(".content__bottom :first-child");
+  const previous = document.querySelectorAll(".content__bottom :not(:first-child)");
+
+  let sentence;
+
+  switch (period) {
+    case 'weekly':
+      sentence = 'Last Week';
+      break;
+    case 'monthly':
+      sentence = 'Last Month';
+      break;
+    case 'daily':
+      sentence = 'Day Before';
+      break;
+    default:
+      sentence = 'unknown period';
+  }
+  
+  for (let i = 0; i < current.length; i++) {
+    current[i].textContent = data[i].current + "hrs";
+    previous[i].textContent = sentence + " - " + data[i].previous + "hrs";
+  }
 }
 
 const activeMenu = (event: Event) => {
@@ -99,21 +120,19 @@ const selectMenu = () => {
   
   weeklyButton.addEventListener('click', async (event)=> {
     activeMenu(event)
-    deleteCards();
     const data =  await sortByTimePeriod("weekly");
-    createCards(data);
+    updateCards("weekly", data);
   })
   dailyButton.addEventListener('click', async (event) => {
     activeMenu(event)
-    deleteCards();
     const data = await sortByTimePeriod("daily");
-    createCards(data);
+    console.log(data);
+    updateCards("daily", data);
   })
   monthlyButton.addEventListener('click', async (event) => {
     activeMenu(event)
-    deleteCards();
     const data = await sortByTimePeriod("monthly");
-    createCards(data);
+    updateCards("monthly", data);
   })
 }
 
