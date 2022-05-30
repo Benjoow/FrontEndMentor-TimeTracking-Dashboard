@@ -1,4 +1,7 @@
-const cardsData = async ():Promise<Array<Object>> => {
+import { timeTrackingData, timeDataSort } from './interface';
+
+
+const cardsData = async ():Promise<Array<timeTrackingData>> => {
   const url = '/data.json';
   const response = await fetch(url, {
     "method": 'GET',
@@ -6,9 +9,7 @@ const cardsData = async ():Promise<Array<Object>> => {
   return response.json();
 }
 
-// Supprimer les Array Any au profit d'une interface ou un type pour l'objet.
-
-const createCards = async (cardsInfo: Array<any>):Promise<void> => {
+const createCards = async (cardsInfo: Array<timeDataSort>):Promise<void> => {
   const main: HTMLElement = document.querySelector("main")!;
   cardsInfo.forEach(item => {
     const card: HTMLDivElement = document.createElement("div");
@@ -62,29 +63,29 @@ const createCards = async (cardsInfo: Array<any>):Promise<void> => {
   })
 }
 
-const updateCards = (period: string ,data: Array<any>) => {
+const updateCards = (period: string ,data: Array<timeDataSort>) => {
   const current = document.querySelectorAll(".content__bottom :first-child");
   const previous = document.querySelectorAll(".content__bottom :not(:first-child)");
-
-  let sentence;
+  
+  let previousSentence;
 
   switch (period) {
     case 'weekly':
-      sentence = 'Last Week';
+      previousSentence = 'Last Week';
       break;
     case 'monthly':
-      sentence = 'Last Month';
+      previousSentence = 'Last Month';
       break;
     case 'daily':
-      sentence = 'Day Before';
+      previousSentence = 'Day Before';
       break;
     default:
-      sentence = 'unknown period';
+      previousSentence = 'unknown period';
   }
   
   for (let i = 0; i < current.length; i++) {
     current[i].textContent = data[i].current + "hrs";
-    previous[i].textContent = sentence + " - " + data[i].previous + "hrs";
+    previous[i].textContent = previousSentence + " - " + data[i].previous + "hrs";
   }
 }
 
@@ -100,9 +101,9 @@ const activeMenu = (event: Event) => {
   })
 }
 
-const sortByTimePeriod = async (period: string): Promise<Array<Object>> => {
-  const data: Array<any> = await cardsData();
-  const dataSort: { title: string; current: number; previous: number } [] = [];
+const sortByTimePeriod = async (period: string): Promise<Array<timeDataSort>> => {
+  const data: timeTrackingData[] = await cardsData();
+  let dataSort: { title: string; current: number; previous: number } [] = [];
   data.forEach(item => {
     dataSort.push({ title:    item.title,
                     current:  item.timeframes[period].current,
@@ -126,7 +127,6 @@ const selectMenu = () => {
   dailyButton.addEventListener('click', async (event) => {
     activeMenu(event)
     const data = await sortByTimePeriod("daily");
-    console.log(data);
     updateCards("daily", data);
   })
   monthlyButton.addEventListener('click', async (event) => {
@@ -140,7 +140,7 @@ const selectMenu = () => {
 const initPage = async () => {
   const weeklyButton: HTMLLIElement = document.querySelector('#weeklyButton')!;
   weeklyButton.classList.add("active");
-  const data = await sortByTimePeriod("weekly");
+  const data: timeDataSort[] = await sortByTimePeriod("weekly");
   createCards(data);
   selectMenu();
 }
