@@ -66,7 +66,7 @@ const createCards = async (cardsInfo: Array<timeDataSort>):Promise<void> => {
 const updateCards = (period: string ,data: Array<timeDataSort>) => {
   const current = document.querySelectorAll(".content__bottom :first-child");
   const previous = document.querySelectorAll(".content__bottom :not(:first-child)");
-  
+
   let previousSentence;
 
   switch (period) {
@@ -77,7 +77,7 @@ const updateCards = (period: string ,data: Array<timeDataSort>) => {
       previousSentence = 'Last Month';
       break;
     case 'daily':
-      previousSentence = 'Day Before';
+      previousSentence = 'Yesterday';
       break;
     default:
       previousSentence = 'unknown period';
